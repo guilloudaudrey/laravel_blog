@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-fluid">
     <h2 class="titrearticle">{{ $article['title']}}</h2>
-                <p>{{ $article['title']}}</p>
+                <p>{{ $article['content']}}</p>
 </div>
 
 

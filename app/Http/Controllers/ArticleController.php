@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Article;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ArticleController extends Controller
 {
@@ -17,7 +19,7 @@ class ArticleController extends Controller
     {
         $articles = Article::all()->where('is_enabled', '=', 1)->sortBy('created_at');
         
-        return view('article.articles')->with('articles', $articles);
+        return view('article.articles', ['articles' => $articles ]);
     }
     
     /**
@@ -56,17 +58,32 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'title'        => 'required',
-            'content'         => 'required',
+        // $this->validate($request, [
+        //     'title' => 'required',
+        //     'content' => 'required',
+        //     'is_enabled' => 'required',
+
+        // ]);
+
+        $validator = Validator::make($request->all(), [
+            'title'   => 'required|unique:articles',
+            'content' => 'required',
+            'is_enabled' => 'required',
         ]);
 
-        if ($request['is_enabled'] == "on"){
-            $request['is_enabled'] = 1;
+        if ($validator->fails()) {
+            return redirect('articles/create')
+                        ->withErrors($validator)
+                        ->withInput();
         }
 
-        // Article::create($request->all());
-        dd($request->all());
+
+        
+        $request['slug'] = str_slug($request['title'], '-');
+
+        // dd($request->all());
+       $article =  Article::create($request->all());
+        return Redirect::to('/articles/'.$article->id);
     }
 
 
@@ -79,6 +96,8 @@ class ArticleController extends Controller
     public function edit($id)
     {
         //
+        return view('article.update');
+
     }
 
     /**

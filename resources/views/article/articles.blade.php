@@ -11,6 +11,9 @@
                 <ul>
                         <li><a href="/articles/{{$article->id}}">{{ $article->title}}</a></li>
                         <li>{{ $article->created_at}}</li>
+                     
+
+                        <a href="/articles/{{$article->id}}">a</a>
                 </ul>
         @endforeach
 </div>
