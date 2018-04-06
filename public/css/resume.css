@@ -1,6 +1,5 @@
 body {
     font-family: 'Nanum Gothic', sans-serif;
-    padding-top: 50px;
     color: #868e96;
 }
 
@@ -21,6 +20,7 @@ h6 {
     font-weight: 500;
     text-transform: uppercase;
     color: #343a40;
+    margin-top: 50px;
 }
 
 h1 {
@@ -34,12 +34,7 @@ h2 {
 }
 
 .container {
-    padding-top: 50px;
     padding-left: 50px;
-}
-
-.titrearticle {
-    margin-top: 50px;
 }
 
 .subheading {

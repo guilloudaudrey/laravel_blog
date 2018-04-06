@@ -14,7 +14,7 @@
             <a class="nav-link js-scroll-trigger" href="/articles">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/articles/create">Nouvel Article</a>
+            <a class="nav-link js-scroll-trigger" href="/articles/create">New Post</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#education">Articles</a>

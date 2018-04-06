@@ -58,12 +58,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'title' => 'required',
-        //     'content' => 'required',
-        //     'is_enabled' => 'required',
-
-        // ]);
 
         $validator = Validator::make($request->all(), [
             'title'   => 'required|unique:articles',
@@ -77,12 +71,11 @@ class ArticleController extends Controller
                         ->withInput();
         }
 
-
         
         $request['slug'] = str_slug($request['title'], '-');
 
         // dd($request->all());
-       $article =  Article::create($request->all());
+       $article =  Article::create($request->except(['_token']));
         return Redirect::to('/articles/'.$article->id);
     }
 
@@ -95,9 +88,8 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
-        return view('article.update');
-
+        $article = Article::find($id);
+        return view('article.update')->with('article', $article);;
     }
 
     /**
@@ -109,7 +101,21 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            'title'   => 'required',
+            'content' => 'required',
+            'is_enabled' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('articles/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $article = Article::where('id', $id)->update($request->except(['_token', '_method']));
+        return Redirect::to('/articles/'.$id);
     }
 
     /**
@@ -120,6 +126,9 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        return Redirect::to('/articles');
     }
 }
