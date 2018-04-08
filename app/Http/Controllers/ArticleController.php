@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Article;
+use App\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +35,8 @@ class ArticleController extends Controller
         if($article['is_enabled'] == 0){
             return Redirect::to('/articles');
         }
-        return view('article.article', ['article' => $article ]);
+        $comments = Comment::all()->where('article_id', '=', $article->id);
+        return view('article.article', ['article' => $article, 'comments' => $comments ]);
         //
     }
 

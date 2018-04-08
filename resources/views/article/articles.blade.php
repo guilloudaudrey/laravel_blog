@@ -17,13 +17,17 @@
                                 <div class="card-body">
                                         <h3 class="card-title"><a href="/articles/{{$article->id}}">{{ $article->title}}</a></h3>
                                         <p class="card-text">{{ $article->content}}</p>
-                                        
-                                        <a type="button" class="btn btn-outline-dark" href="{{ route('articles.edit', $article->id) }}">Edit</a>
-                                        <form method="POST" action="/articles/{{$article->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                                <input type="submit" class="btn btn-outline-dark" value="Delete">
-                                        </form>
+                                        <div class="row">
+                                                <form action="{{ route('articles.edit', $article->id) }}">
+                                                        <input type="submit" class="btn btn-outline-dark" value="Edit">
+                                                </form>
+
+                                                <form method="POST" action="/articles/{{$article->id}}">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+                                                        <input type="submit" class="btn btn-outline-dark" value="Delete" style="margin-left:10px">
+                                                </form>
+                                        </div>
                                 </div>
                                 <div class="card-footer text-muted">
                                 {{ $article->created_at}}
