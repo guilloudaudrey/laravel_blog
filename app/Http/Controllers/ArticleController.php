@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Article;
-use App\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Article;
+use App\Comment;
+use App\Tag;
 
 class ArticleController extends Controller
 {
@@ -19,8 +20,9 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all()->where('is_enabled', '=', 1)->sortBy('created_at');
+        $tags = Tag::all();
         
-        return view('article.articles', ['articles' => $articles ]);
+        return view('article.articles', ['articles' => $articles, 'tags' => $tags]);
     }
     
     /**

@@ -32,6 +32,11 @@
                                 <div class="card-footer text-muted">
                                 {{ $article->created_at}}
                                 </div>
+                                <div class="card-footer text-muted">
+                                @foreach($tags as $tag)
+                                <span class="badge badge-secondary">{{$tag->name}}</span>
+                                @endforeach
+                                </div>
                         </div>
                 </div>
         </div>
