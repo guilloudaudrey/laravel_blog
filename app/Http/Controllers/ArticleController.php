@@ -17,10 +17,13 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
-        $articles = Article::all()->where('is_enabled', '=', 1)->sortBy('created_at');
+        $articles = Article::latest()->where('is_enabled', '=', 1)->paginate(5);
         $tags = Tag::all();
+
         
         return view('article.articles', ['articles' => $articles, 'tags' => $tags]);
     }
@@ -37,8 +40,9 @@ class ArticleController extends Controller
         if($article['is_enabled'] == 0){
             return Redirect::to('/articles');
         }
+
         $comments = Comment::all()->where('article_id', '=', $article->id);
-        return view('article.article', ['article' => $article, 'comments' => $comments ]);
+        return view('article.article', ['article' => $article, 'comments' => $comments]);
         //
     }
 
